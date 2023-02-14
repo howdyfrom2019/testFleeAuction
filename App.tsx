@@ -19,17 +19,21 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import HorizontalScrollView from './src/Components/HorizontalScrollView';
+import { useSSE } from "./src/Hooks/useSSE";
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 function App(): JSX.Element {
+  const stream = useSSE();
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  console.log(stream);
 
   return (
     <SafeAreaView style={[backgroundStyle, styles.container]}>
