@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import {ScrollView, StyleSheet, Text} from 'react-native';
 
 function HorizontalScrollView() {
   return (
@@ -10,7 +10,7 @@ function HorizontalScrollView() {
       <Text style={styles.item}>hi</Text>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
   },
   item: {
     color: 'white',
-  }
+  },
 });
 export default HorizontalScrollView;

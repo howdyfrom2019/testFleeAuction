@@ -1,5 +1,11 @@
-import { RNEventSource } from 'rn-eventsource-reborn';
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import {RNEventSource} from 'rn-eventsource-reborn';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 export interface SSEProps {
   data: string;
@@ -21,7 +27,10 @@ export function useSSE(
 
   const initArtData = useCallback(() => {
     let start = 2123;
-    const targets: ArtWorksType = Array.from({ length: 20 }, (_, i) => ({ auctionId: start + i, viewCount: -1 }));
+    const targets: ArtWorksType = Array.from({length: 20}, (_, i) => ({
+      auctionId: start + i,
+      viewCount: -1,
+    }));
     setCurrWeekArts(targets);
   }, []);
 
