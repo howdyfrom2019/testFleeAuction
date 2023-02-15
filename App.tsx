@@ -11,13 +11,14 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  ScrollView,
+  View,
   useColorScheme,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import HorizontalScrollView from './src/Components/HorizontalScrollView';
 import {auctionType, SSEProps, useSSE} from './src/Hooks/useSSE';
+import ArtworkDash from "./src/Components/ArtworkDash";
 
 function App(): JSX.Element {
   const [SSETarget, setSSETarget] = useState<auctionType | null>(null);
@@ -62,14 +63,36 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView style={styles.contents}>
+      <View style={styles.contents}>
         <Text style={styles.label}>가로 스크롤 영역 #1</Text>
-        <HorizontalScrollView />
-      </ScrollView>
-      <ScrollView style={styles.contents}>
+        <HorizontalScrollView
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          snapToStart>
+          {artwork.map((value, i) => (
+            <ArtworkDash
+              auctionType={value}
+              key={i}
+              style={i > 0 ? {marginLeft: 4} : {}}
+            />
+          ))}
+        </HorizontalScrollView>
+      </View>
+      <View style={styles.contents}>
         <Text style={styles.label}>가로 스크롤 영역 #2</Text>
-        <HorizontalScrollView />
-      </ScrollView>
+        <HorizontalScrollView
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          snapToStart>
+          {artwork.map((value, i) => (
+            <ArtworkDash
+              auctionType={value}
+              key={i}
+              style={i > 0 ? {marginLeft: 4} : {}}
+            />
+          ))}
+        </HorizontalScrollView>
+      </View>
     </SafeAreaView>
   );
 }

@@ -1,15 +1,14 @@
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
-import ArtworkDash from './ArtworkDash';
+import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 
-function HorizontalScrollView() {
+interface HorizontalScrollProps extends ScrollViewProps {
+  children?: React.ReactNode;
+}
+
+function HorizontalScrollView({children, ...props}: HorizontalScrollProps) {
   return (
-    <ScrollView horizontal style={styles.container}>
-      <ArtworkDash auctionType={{ auctionId: 1, viewCount: 1}} />
-      <ArtworkDash auctionType={{ auctionId: 1, viewCount: 1}} style={{ marginLeft: 4 }} />
-      <ArtworkDash auctionType={{ auctionId: 1, viewCount: 1}} style={{ marginLeft: 4 }} />
-      <ArtworkDash auctionType={{ auctionId: 1, viewCount: 1}} style={{ marginLeft: 4 }} />
-      <ArtworkDash auctionType={{ auctionId: 1, viewCount: 1}} style={{ marginLeft: 4 }} />
+    <ScrollView style={styles.container} {...props} horizontal>
+      {children}
     </ScrollView>
   );
 }
@@ -17,9 +16,7 @@ function HorizontalScrollView() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-  },
-  item: {
-    color: 'white',
+    backgroundColor: '#dcdcdc',
   },
 });
 export default HorizontalScrollView;
