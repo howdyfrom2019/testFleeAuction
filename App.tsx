@@ -5,8 +5,7 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useEffect, useRef } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -14,16 +13,11 @@ import {
   Text,
   ScrollView,
   useColorScheme,
-  View,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import HorizontalScrollView from './src/Components/HorizontalScrollView';
 import { useSSE } from "./src/Hooks/useSSE";
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
 function App(): JSX.Element {
   const stream = useSSE();
@@ -32,8 +26,6 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  console.log(stream);
 
   return (
     <SafeAreaView style={[backgroundStyle, styles.container]}>

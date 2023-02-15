@@ -1,22 +1,14 @@
-import RNEventSource from 'react-native-event-source';
+import { RNEventSource } from 'rn-eventsource-reborn';
+import { useCallback, useEffect } from 'react';
+
 export function useSSE(): any {
-  const eventSource = new RNEventSource(
-    'https://api.fleaauction.world/v2/sse/event',
-    {
-      headers: {
-        'Cache-Control': 'no-cache',
-        Connection: 'keep-alive'
-      },
-    }
-  );
 
-  eventSource.addEventListener('open', e => console.log(e));
-  eventSource.addEventListener('error', e => console.log(e));
-  eventSource.addEventListener('close', e => console.log(e));
+  useEffect(() => {
+    const source = new RNEventSource(
+      'https://api.fleaauction.world/v2/sse/event',
+    );
+    source.addEventListener('sse.auction_viewed', (e) => console.log(e));
+  }, []);
 
-  eventSource.addEventListener('sse.auction_viewed', (e) => {
-    console.log(e);
-  });
-
-  return eventSource;
+  return 1;
 }

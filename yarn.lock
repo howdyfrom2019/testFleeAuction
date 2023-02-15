@@ -1750,11 +1750,6 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react-native-event-source@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/react-native-event-source/-/react-native-event-source-1.1.0.tgz#3db127dc1f98d8ca29b106b820475bfbb10fff0a"
-  integrity sha512-F45yAUXq5XqzXSXmToY3gtMKq4EJThhNKWybtnK6dNRkmDb285K8YWwV1XMDcM6BQCtW9RDax3oJQj4nLbSvIg==
-
 "@types/react-test-renderer@^18.0.0":
   version "18.0.0"
   resolved "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-18.0.0.tgz"
@@ -5693,11 +5688,6 @@ react-native-codegen@^0.71.3:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-react-native-event-source@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-event-source/-/react-native-event-source-1.1.0.tgz#75a085df49d17ffd6ff31ffeb269dd64e21b841a"
-  integrity sha512-CAs76IW8kTrdy0okfV2KPopm7E9TL0uNAR+SRrN7iZ/ii0zBeHWuhD4Q2F8gRKvmkrEtCZ6uwnfYL2TFmK0QZg==
-
 react-native-gradle-plugin@^0.71.14:
   version "0.71.15"
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.15.tgz"
@@ -5980,6 +5970,13 @@ rimraf@~2.6.2:
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   dependencies:
     glob "^7.1.3"
+
+rn-eventsource-reborn@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/rn-eventsource-reborn/-/rn-eventsource-reborn-1.0.5.tgz#4d8cd5a201dc7b2f57f9533a875e31a5dc4d00bf"
+  integrity sha512-MvSxKYHh3tPAahtpKz8bE2+x+lHau2RZVRKBfM+60ywFDbTHoY6rYwVKjZ427nfCIn5RXfYCs6K/GJiz84/cQw==
+  dependencies:
+    event-target-shim "^5.0.1"
 
 run-parallel@^1.1.9:
   version "1.2.0"
