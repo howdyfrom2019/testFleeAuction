@@ -56,8 +56,6 @@ function App(): JSX.Element {
     }
   }, [SSETarget, onChangeArtwork]);
 
-  console.log(artwork);
-
   return (
     <SafeAreaView style={[backgroundStyle, styles.container]}>
       <StatusBar
