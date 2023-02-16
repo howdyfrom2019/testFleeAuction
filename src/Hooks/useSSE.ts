@@ -18,16 +18,14 @@ export interface auctionType {
   viewCount: number;
 }
 
-type ArtWorksType = auctionType[];
-
 export function useSSE(
   callback: (e: Event) => void,
-): [ArtWorksType, Dispatch<SetStateAction<ArtWorksType>>] {
-  const [currWeekArts, setCurrWeekArts] = useState<ArtWorksType>([]);
+): [auctionType[], Dispatch<SetStateAction<auctionType[]>>] {
+  const [currWeekArts, setCurrWeekArts] = useState<auctionType[]>([]);
 
   const initArtData = useCallback(() => {
     let start = 2123;
-    const targets: ArtWorksType = Array.from({length: 20}, (_, i) => ({
+    const targets: auctionType[] = Array.from({length: 20}, (_, i) => ({
       auctionId: start + i,
       viewCount: -1,
     }));
@@ -43,6 +41,11 @@ export function useSSE(
       'https://api.fleaauction.world/v2/sse/event',
     );
     source.addEventListener('sse.auction_viewed', callback);
+
+    return () => {
+      source.removeEventListener('sse.auction_viewed', callback);
+      source.close();
+    };
   }, [callback]);
 
   return [currWeekArts, setCurrWeekArts];

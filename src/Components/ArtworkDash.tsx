@@ -1,10 +1,10 @@
-import React from "react";
-import { Dimensions, StyleSheet, Text, View, ViewStyle } from "react-native";
+import React from 'react';
+import {Dimensions, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {auctionType} from '../Hooks/useSSE';
 
 interface ArtworkDashProps {
-  auctionType: auctionType,
-  style?: ViewStyle,
+  auctionType: auctionType;
+  style?: ViewStyle;
 }
 function ArtworkDash({
   auctionType: {auctionId, viewCount},

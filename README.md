@@ -8,7 +8,7 @@
 
 ```bash
 [dev]
-npm run start #개발 환경에서 실행
+yarn start -- --reset-cache #개발 환경에서 실행
 npm test # 테스트 코드 수행
 ```
 
