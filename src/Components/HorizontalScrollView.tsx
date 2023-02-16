@@ -16,7 +16,7 @@ function HorizontalScrollView({children, ...props}: HorizontalScrollProps) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#dcdcdc',
+    backgroundColor: '#ececec',
   },
 });
 export default HorizontalScrollView;

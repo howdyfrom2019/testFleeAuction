@@ -13,12 +13,12 @@ import {
   Text,
   View,
   useColorScheme,
+  Dimensions,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import HorizontalScrollView from './src/Components/HorizontalScrollView';
 import {auctionType, SSEProps, useSSE} from './src/Hooks/useSSE';
-import ArtworkDash from "./src/Components/ArtworkDash";
+import RandomArtworkSection from './src/Components/RandomArtworkSection';
 
 function App(): JSX.Element {
   const [SSETarget, setSSETarget] = useState<auctionType | null>(null);
@@ -63,35 +63,12 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <View style={styles.contents}>
-        <Text style={styles.label}>가로 스크롤 영역 #1</Text>
-        <HorizontalScrollView
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          snapToStart>
-          {artwork.map((value, i) => (
-            <ArtworkDash
-              auctionType={value}
-              key={i}
-              style={i > 0 ? {marginLeft: 4} : {}}
-            />
-          ))}
-        </HorizontalScrollView>
+      <View style={styles.header}>
+        <Text style={styles.headerFont}>헤더 영역</Text>
       </View>
       <View style={styles.contents}>
-        <Text style={styles.label}>가로 스크롤 영역 #2</Text>
-        <HorizontalScrollView
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          snapToStart>
-          {artwork.map((value, i) => (
-            <ArtworkDash
-              auctionType={value}
-              key={i}
-              style={i > 0 ? {marginLeft: 4} : {}}
-            />
-          ))}
-        </HorizontalScrollView>
+        <RandomArtworkSection artwork={artwork} label={'정렬 1'} />
+        <RandomArtworkSection artwork={artwork} label={'정렬 2'} />
       </View>
     </SafeAreaView>
   );
@@ -99,15 +76,21 @@ function App(): JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
-    paddingVertical: 36,
     flex: 1,
+  },
+  header: {
+    flex: 1,
+    flexDirection: 'row',
+    width: Dimensions.get('screen').width,
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  headerFont: {
+    fontSize: 16,
+    fontWeight: '600',
   },
   highlight: {
     fontWeight: '700',
-  },
-  label: {
-    fontWeight: '600',
   },
   contents: {
     flex: 4,
