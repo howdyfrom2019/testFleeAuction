@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
   },
 });
-describe('컴포넌트 렌더링', () => {
-  it('목업 컴포넌트 렌더링', () => {
+describe('HorizontalScrollView 컴포넌트 테스트', () => {
+  it('HorizontalScrollView 컴포넌트 렌더링', () => {
     render(
       <View style={styles.flex}>
         <HorizontalScrollView>
