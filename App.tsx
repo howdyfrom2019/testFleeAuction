@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -19,6 +19,7 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {auctionType, SSEProps, useSSE} from './src/Hooks/useSSE';
 import RandomArtworkSection from './src/Components/RandomArtworkSection';
+import {TabView, SceneMap} from 'react-native-tab-view';
 
 function App(): JSX.Element {
   const [SSETarget, setSSETarget] = useState<auctionType | null>(null);
@@ -29,7 +30,26 @@ function App(): JSX.Element {
     setSSETarget(auctionItem);
   }, []);
 
+  function MainFragment(): JSX.Element {
+    return (
+      <>
+        <RandomArtworkSection artwork={artwork} label={'정렬 1'} />
+        <RandomArtworkSection artwork={artwork} label={'정렬 2'} />
+      </>
+    );
+  }
+
   const [artwork, setArtWork] = useSSE(itemClickedListener);
+  const [page, setPage] = useState(0);
+  const routes = useMemo(
+    () => Array.from({length: 3}, (_, i) => ({key: `${i}`, title: `${i}번째`})),
+    [],
+  );
+  const renderScene = SceneMap({
+    '0': MainFragment,
+    '1': MainFragment,
+    '2': MainFragment,
+  });
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -66,10 +86,14 @@ function App(): JSX.Element {
       <View style={styles.header}>
         <Text style={styles.headerFont}>헤더 영역</Text>
       </View>
-      <View style={styles.contents}>
-        <RandomArtworkSection artwork={artwork} label={'정렬 1'} />
-        <RandomArtworkSection artwork={artwork} label={'정렬 2'} />
-      </View>
+      <TabView
+        onIndexChange={setPage}
+        navigationState={{index: page, routes}}
+        renderScene={renderScene}
+        initialLayout={{width: Dimensions.get('screen').width}}
+        tabBarPosition={'bottom'}
+        style={styles.contents}
+      />
     </SafeAreaView>
   );
 }
