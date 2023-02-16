@@ -14,6 +14,8 @@ import {
   View,
   useColorScheme,
   Dimensions,
+  RefreshControl,
+  ScrollView,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -29,6 +31,13 @@ function App(): JSX.Element {
     const auctionItem: auctionType = JSON.parse(data);
     setSSETarget(auctionItem);
   }, []);
+  const [artwork, setArtWork] = useSSE(itemClickedListener);
+  const [page, setPage] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+  const routes = useMemo(
+    () => Array.from({length: 3}, (_, i) => ({key: `${i}`, title: `${i}번째`})),
+    [],
+  );
 
   function MainFragment(): JSX.Element {
     return (
@@ -39,12 +48,6 @@ function App(): JSX.Element {
     );
   }
 
-  const [artwork, setArtWork] = useSSE(itemClickedListener);
-  const [page, setPage] = useState(0);
-  const routes = useMemo(
-    () => Array.from({length: 3}, (_, i) => ({key: `${i}`, title: `${i}번째`})),
-    [],
-  );
   const renderScene = SceneMap({
     '0': MainFragment,
     '1': MainFragment,
@@ -77,29 +80,42 @@ function App(): JSX.Element {
     }
   }, [SSETarget, onChangeArtwork]);
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
   return (
-    <SafeAreaView style={[backgroundStyle, styles.container]}>
+    <SafeAreaView style={[backgroundStyle, styles.root]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <View style={styles.header}>
-        <Text style={styles.headerFont}>헤더 영역</Text>
-      </View>
-      <TabView
-        onIndexChange={setPage}
-        navigationState={{index: page, routes}}
-        renderScene={renderScene}
-        initialLayout={{width: Dimensions.get('screen').width}}
-        tabBarPosition={'bottom'}
-        style={styles.contents}
-      />
+      <ScrollView
+        contentContainerStyle={styles.contents}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <View style={styles.header}>
+          <Text style={styles.headerFont}>헤더 영역</Text>
+        </View>
+        <TabView
+          onIndexChange={setPage}
+          navigationState={{index: page, routes}}
+          renderScene={renderScene}
+          initialLayout={{width: Dimensions.get('screen').width}}
+          tabBarPosition={'bottom'}
+          style={styles.contents}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
   },
   header: {

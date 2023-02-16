@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {auctionType} from '../Hooks/useSSE';
 import HorizontalScrollView from './HorizontalScrollView';
 import ArtworkDash from './ArtworkDash';
+import {shuffle} from '../Utils/CommonFunction';
 
 interface Props {
   label?: string;
@@ -17,7 +18,7 @@ function RandomArtworkSection({label, artwork}: Props) {
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         snapToStart>
-        {artwork.map((value, i) => (
+        {shuffle(artwork).map((value, i) => (
           <ArtworkDash
             auctionType={value}
             key={i}
