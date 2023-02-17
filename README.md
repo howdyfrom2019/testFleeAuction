@@ -9,7 +9,11 @@
 > 로컬 테스트를 android 환경에서만 진행했습니다.
 > (iOS에서는 작동하지 못할 수도 있습니다.)
 ```bash
-[dev]
+[연관 라이브러리 설치]
+yarn init
+```
+```bash
+[프로젝트 실행]
 yarn start -- --reset-cache #캐시 없이 코드 실행.
 yarn android #안드로이드 시뮬레이터로 실행.
 yarn ios #iOS 시뮬레이터(XCode)로 실행.
