@@ -24,6 +24,7 @@ import RandomArtworkSection from './src/Components/RandomArtworkSection';
 import {TabView, SceneMap} from 'react-native-tab-view';
 
 function App(): JSX.Element {
+  // SSETarget: sse.auction_viewed 이벤트가 발생했을 때 event.data를 관리하는 상태
   const [SSETarget, setSSETarget] = useState<auctionType | null>(null);
 
   const itemClickedListener = useCallback((e: Event) => {
@@ -31,7 +32,9 @@ function App(): JSX.Element {
     const auctionItem: auctionType = JSON.parse(data);
     setSSETarget(auctionItem);
   }, []);
+  // useSSE: sse.auction_viewed 이벤트에 대응할 콜백을 매개변수로 받음.
   const [artwork, setArtWork] = useSSE(itemClickedListener);
+  // page, refreshing, routes: TabView 관련된 상태.
   const [page, setPage] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const routes = useMemo(
