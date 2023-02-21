@@ -4,6 +4,7 @@ import {
   SetStateAction,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 
@@ -19,22 +20,22 @@ export interface auctionType {
 }
 
 export function useSSE(
+  start: number,
   callback: (e: Event) => void,
 ): [auctionType[], Dispatch<SetStateAction<auctionType[]>>] {
   const [currWeekArts, setCurrWeekArts] = useState<auctionType[]>([]);
 
   const initArtData = useCallback(() => {
-    let start = 2123;
     const targets: auctionType[] = Array.from({length: 20}, (_, i) => ({
       auctionId: start + i,
       viewCount: -1,
     }));
     setCurrWeekArts(targets);
-  }, []);
+  }, [start]);
 
   useEffect(() => {
     initArtData();
-  }, [initArtData]);
+  }, []);
 
   useEffect(() => {
     const source = new RNEventSource(

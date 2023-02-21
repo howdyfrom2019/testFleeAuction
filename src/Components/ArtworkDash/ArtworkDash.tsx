@@ -1,28 +1,26 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Text, View, ViewStyle} from 'react-native';
-import {auctionType} from '../Hooks/useSSE';
+import ViewCount from "./ViewCount";
 
 interface ArtworkDashProps {
-  auctionType: auctionType;
   style?: ViewStyle;
+  id: number;
+  count: number;
 }
-function ArtworkDash({
-  auctionType: {auctionId, viewCount},
-  style,
-}: ArtworkDashProps) {
+const ArtworkDash = React.memo(({style, id, count}: ArtworkDashProps) => {
   return (
     <View style={[styles.container, style]}>
       <View style={styles.row}>
         <Text style={styles.bold}>작품 ID</Text>
-        <Text>{auctionId}</Text>
+        <Text>{id}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.bold}>조회수</Text>
-        <Text>{viewCount === -1 ? '정보 없음' : viewCount}</Text>
+        <ViewCount count={count} id={id} />
       </View>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {

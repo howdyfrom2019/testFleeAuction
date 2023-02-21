@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -19,21 +19,12 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {auctionType, SSEProps, useSSE} from './src/Hooks/useSSE';
-import RandomArtworkSection from './src/Components/RandomArtworkSection';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView} from 'react-native-tab-view';
+import TabMainFragment from './src/Layout/TabMainFragment';
+import {SceneRendererProps} from 'react-native-tab-view/lib/typescript/src/types';
+import SSECaptureLayer from "./src/Layout/SSECaptureLayer";
 
 function App(): JSX.Element {
-  // SSETarget: sse.auction_viewed 이벤트가 발생했을 때 event.data를 관리하는 상태
-  const [SSETarget, setSSETarget] = useState<auctionType | null>(null);
-
-  const itemClickedListener = useCallback((e: Event) => {
-    const {data} = e as unknown as SSEProps;
-    const auctionItem: auctionType = JSON.parse(data);
-    setSSETarget(auctionItem);
-  }, []);
-  // useSSE: sse.auction_viewed 이벤트에 대응할 콜백을 매개변수로 받음.
-  const [artwork, setArtWork] = useSSE(itemClickedListener);
   // page, refreshing, routes: TabView 관련된 상태.
   const [page, setPage] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -42,46 +33,27 @@ function App(): JSX.Element {
     [],
   );
 
-  function MainFragment(): JSX.Element {
-    return (
-      <>
-        <RandomArtworkSection artwork={artwork} label={'정렬 1'} />
-        <RandomArtworkSection artwork={artwork} label={'정렬 2'} />
-      </>
-    );
-  }
+  const renderScene = useCallback(
+    ({route}: SceneRendererProps & {route: {key: string; title: string}}) => {
+      switch (route.key) {
+        case '0':
+          return <TabMainFragment />;
+        case '1':
+          return <TabMainFragment />;
+        case '2':
+          return <TabMainFragment />;
+        default:
+          throw new Error('unhandled operation');
+      }
+    },
+    [],
+  );
 
-  const renderScene = SceneMap({
-    '0': MainFragment,
-    '1': MainFragment,
-    '2': MainFragment,
-  });
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  const onChangeArtwork = useCallback(
-    (target: auctionType) => {
-      const {auctionId} = target;
-      setArtWork(prev => {
-        return prev.map(v => {
-          if (v.auctionId === auctionId) {
-            return target;
-          }
-          return v;
-        });
-      });
-    },
-    [setArtWork],
-  );
-
-  useEffect(() => {
-    if (SSETarget) {
-      onChangeArtwork(SSETarget);
-    }
-  }, [SSETarget, onChangeArtwork]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -104,14 +76,16 @@ function App(): JSX.Element {
         <View style={styles.header}>
           <Text style={styles.headerFont}>헤더 영역</Text>
         </View>
-        <TabView
-          onIndexChange={setPage}
-          navigationState={{index: page, routes}}
-          renderScene={renderScene}
-          initialLayout={{width: Dimensions.get('screen').width}}
-          tabBarPosition={'bottom'}
-          style={styles.contents}
-        />
+        <SSECaptureLayer>
+          <TabView
+            onIndexChange={setPage}
+            navigationState={{index: page, routes}}
+            renderScene={renderScene}
+            initialLayout={{width: Dimensions.get('screen').width}}
+            tabBarPosition={'bottom'}
+            style={styles.contents}
+          />
+        </SSECaptureLayer>
       </ScrollView>
     </SafeAreaView>
   );

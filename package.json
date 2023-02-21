@@ -33,7 +33,8 @@
     "react-native-tab-view": "^3.4.0",
     "react-test-renderer": "18.2.0",
     "rn-eventsource-reborn": "^1.0.5",
-    "typescript": "4.8.4"
+    "typescript": "4.8.4",
+    "zustand": "^4.3.3"
   },
   "jest": {
     "preset": "react-native"
