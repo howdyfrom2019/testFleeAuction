@@ -18,9 +18,7 @@ export interface auctionType {
   viewCount: number;
 }
 
-export function useSSE(
-  callback: (e: Event) => void,
-): [auctionType[], Dispatch<SetStateAction<auctionType[]>>] {
+export function useSSE(callback: (e: Event) => void): [auctionType[]] {
   const [currWeekArts, setCurrWeekArts] = useState<auctionType[]>([]);
 
   const initArtData = useCallback(() => {
@@ -48,5 +46,5 @@ export function useSSE(
     };
   }, [callback]);
 
-  return [currWeekArts, setCurrWeekArts];
+  return [currWeekArts];
 }

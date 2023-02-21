@@ -10,7 +10,7 @@ interface Props {
   artwork: auctionType[];
 }
 
-function RandomArtworkSection({label, artwork}: Props) {
+function RandomArtworkSection({artwork, label}: Props) {
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}

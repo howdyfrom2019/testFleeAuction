@@ -33,7 +33,7 @@ function App(): JSX.Element {
     setSSETarget(auctionItem);
   }, []);
   // useSSE: sse.auction_viewed 이벤트에 대응할 콜백을 매개변수로 받음.
-  const [artwork, setArtWork] = useSSE(itemClickedListener);
+  const [artwork] = useSSE(itemClickedListener);
   // page, refreshing, routes: TabView 관련된 상태.
   const [page, setPage] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -62,26 +62,26 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const onChangeArtwork = useCallback(
-    (target: auctionType) => {
-      const {auctionId} = target;
-      setArtWork(prev => {
-        return prev.map(v => {
-          if (v.auctionId === auctionId) {
-            return target;
-          }
-          return v;
-        });
-      });
-    },
-    [setArtWork],
-  );
+  // const onChangeArtwork = useCallback(
+  //   (target: auctionType) => {
+  //     const {auctionId} = target;
+  //     setArtWork(prev => {
+  //       return prev.map(v => {
+  //         if (v.auctionId === auctionId) {
+  //           return target;
+  //         }
+  //         return v;
+  //       });
+  //     });
+  //   },
+  //   [setArtWork],
+  // );
 
-  useEffect(() => {
-    if (SSETarget) {
-      onChangeArtwork(SSETarget);
-    }
-  }, [SSETarget, onChangeArtwork]);
+  // useEffect(() => {
+  //   if (SSETarget) {
+  //     onChangeArtwork(SSETarget);
+  //   }
+  // }, [SSETarget, onChangeArtwork]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
