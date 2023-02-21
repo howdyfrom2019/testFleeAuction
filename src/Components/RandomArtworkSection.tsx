@@ -43,7 +43,8 @@ const RandomArtworkSection = ({label}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 180,
+    marginVertical: 'auto',
     paddingHorizontal: 24,
   },
   label: {
